@@ -3,8 +3,16 @@ import redis from 'redis';
 
 /**
  * Manage the cache
+ *
+ * @typedef {Object} CacheEntity
+ * @property {string} timestamp - The inert timestamp
+ * @property {*} value - The saved value
+ *
  */
 export default class Cache {
+  /**
+   * Construct the cache instance
+   */
   constructor() {
     this.client = redis.createClient();
     this.getAsync = promisify(this.client.get).bind(this.client);
@@ -14,10 +22,11 @@ export default class Cache {
   /**
    * Save data to the cache
    * @param {string} key
-   * @param value
+   * @param {*} value
    */
   save(key, value) {
-    this.client.set(key, value);
+    let timestamp = Date.now();
+    this.client.set(key, JSON.stringify({ timestamp, value }));
   }
 
   /**
@@ -34,13 +43,16 @@ export default class Cache {
   /**
    * Retrieve data from the cache
    * @param {string} key
-   * @returns {Promise}
+   * @returns {CacheEntity}
    */
   async fetch(key) {
     let response = await this.getAsync(key);
-    return response;
+    return JSON.parse(response);
   }
 
+  /**
+   * Clear the database
+   */
   clear() {
     this.client.keys('*', (err, keys) => {
       if (err) throw new Error(err);
@@ -50,6 +62,9 @@ export default class Cache {
     });
   }
 
+  /**
+   * Close the connection
+   */
   close() {
     this.clear();
     this.client.end(false);

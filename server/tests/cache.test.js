@@ -32,6 +32,6 @@ describe('Cache', () => {
   it('should retrieve data from the cache', async () => {
     cache.save('test', 'Hello world !');
     let response = await cache.fetch('test');
-    expect(response).toBe('Hello world !');
+    expect(response.value).toBe('Hello world !');
   });
 });
