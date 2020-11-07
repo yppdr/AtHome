@@ -1,4 +1,4 @@
-import { promisify } from 'utils';
+import { promisify } from 'util';
 import redis from 'redis';
 
 /**
@@ -8,8 +8,6 @@ export default class Cache {
   constructor() {
     this.client = redis.createClient();
     this.getAsync = promisify(this.client.get).bind(this.client);
-    this.setAsync = promisify(this.client.set).bind(this.client);
-
     this.client.on('error', console.error);
   }
 
@@ -17,11 +15,9 @@ export default class Cache {
    * Save data to the cache
    * @param {string} key
    * @param value
-   *
-   * @returns {Promise}
    */
-  async save(key, value) {
-    return this.setAsync(key, value);
+  save(key, value) {
+    this.client.set(key, value);
   }
 
   /**
@@ -31,5 +27,9 @@ export default class Cache {
    */
   async fetch(key) {
     return await this.getAsync(key);
+  }
+
+  close() {
+    this.client.end(true);
   }
 }
