@@ -21,15 +21,37 @@ export default class Cache {
   }
 
   /**
+   *  Check if data is in the cache
+   * @param {string} key
+   *
+   * @returns {boolean}
+   */
+  async has(key) {
+    let response = await this.fetch(key);
+    return response !== null;
+  }
+
+  /**
    * Retrieve data from the cache
    * @param {string} key
    * @returns {Promise}
    */
   async fetch(key) {
-    return await this.getAsync(key);
+    let response = await this.getAsync(key);
+    return response;
+  }
+
+  clear() {
+    this.client.keys('*', (err, keys) => {
+      if (err) throw new Error(err);
+      for (var i = 0, len = keys.length; i < len; i++) {
+        this.client.del(keys[i]);
+      }
+    });
   }
 
   close() {
-    this.client.end(true);
+    this.clear();
+    this.client.end(false);
   }
 }

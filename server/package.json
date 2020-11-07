@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/yppdr/AtHome.git"
   },
-  "author": "Yannis Piot Piot, Jonathan Debétaz <contact@jonathan-d.ch>",
+  "author": "Yannis Piot Piot <yannis@piotpilot.eu>, Jonathan Debétaz <contact@jonathan-d.ch>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/yppdr/AtHome/issues"
