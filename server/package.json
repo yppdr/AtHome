@@ -5,23 +5,27 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "start": "node server.js",
+    "dev": "npx nodemon server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yppdr/AtHome.git"
   },
-  "author": "Yannis Piot Piot, Jonathan Debétaz",
+  "author": "Yannis Piot Piot <yannis@piotpilot.eu>, Jonathan Debétaz <contact@jonathan-d.ch>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/yppdr/AtHome/issues"
   },
   "homepage": "https://github.com/yppdr/AtHome#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "redis": "^3.0.2"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.15",
+    "jest": "^26.6.3",
     "nodemon": "^2.0.6"
   }
 }
