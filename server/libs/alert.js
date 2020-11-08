@@ -32,13 +32,7 @@ export default class Alert {
      
 var ts_hms = new Date();
 
-var dt =
-    ts_hms.getFullYear() + '-' + 
-    ("0" + (ts_hms.getMonth() + 1)).slice(-2) + '-' + 
-    ("0" + (ts_hms.getDate())).slice(-2) + ' ' +
-    ("0" + ts_hms.getHours()).slice(-2) + ':' +
-    ("0" + ts_hms.getMinutes()).slice(-2) + ':' +
-    ("0" + ts_hms.getSeconds()).slice(-2);
+var dt = ts_hms.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
 
 const msg = new webhook.MessageBuilder()
                 .setName("KiwiNetwork")
